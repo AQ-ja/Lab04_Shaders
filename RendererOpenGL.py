@@ -8,16 +8,34 @@ import shaders
 width = 960
 height = 540
 
+# Ya que lo vi en internet igual y sirve para el proyecto. 
 deltaTime = 0.0
+cubeX = 0
+cubeY = 0
+cubeZ = 0
+roll = 0
+pitch = 0
+yaw = 0
+distance = 0
+
+changeY=False
+changeX=False
+
+
+
 
 pygame.init()
-screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.OPENGL )
+screen = pygame.display.set_mode((width,height), pygame.DOUBLEBUF | pygame.OPENGL | pygame.OPENGLBLIT )
 clock = pygame.time.Clock()
+
+# Posible fondo 
+bgspace = pygame.image.load('white.png')
+
 
 rend = Renderer(screen)
 rend.setShaders(shaders.vertex_shader, shaders.fragment_shader)
 
-face = Model('model.obj', 'model.bmp')
+face = Model('ufo.obj', 'earth.bmp')
 face.position.z = -5
 
 rend.scene.append( face )
@@ -70,6 +88,17 @@ while isRunning:
                 rend.filledMode()
             if ev.key == K_2:
                 rend.wireframeMode()
+            #Empiezan los shaders
+            if ev.key == K_3:
+                rend.setShaders(shaders.vertex_shader, shaders.fragment_shader_v2)
+            if ev.key == K_4:
+                rend.setShaders(shaders.vertex_shader, shaders.fragment_shader_v3)
+            if ev.key == K_5:
+                rend.setShaders(shaders.vertex_shader, shaders.fragment_shader_v4)
+            if ev.key == K_6:
+                rend.setShaders(shaders.vertex_toon_shader, shaders.fragment_shader_v5)
+            if ev.key == K_7:
+                rend.setShaders(shaders.vertex_try_shader, shaders.atlantis)
 
     rend.tiempo += deltaTime
     deltaTime = clock.tick(60) / 1000
